@@ -5,7 +5,6 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import {routes} from './routes'
 import StoreData from './store'
-import MainApp from "./components/MainApp"
 
 Vue.use(VueRouter);
 
@@ -18,11 +17,13 @@ const router = new VueRouter({
 });
 
 const app = new Vue({
-    el: '#app',
     router,
     store,
+    el: '#app',
 
-    components: {
-        MainApp
-    }
+    created() {
+       store.dispatch('getProducts')
+           .then(_ => {})
+           .catch((error) => console.error(error));
+    },
 });

@@ -17,7 +17,7 @@
 
 <div class="container mx-auto">
     <div id="app">
-        <main-app></main-app>
+        <router-view></router-view>
     </div>
 </div>
 
