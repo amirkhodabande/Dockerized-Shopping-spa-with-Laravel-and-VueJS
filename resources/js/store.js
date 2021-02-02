@@ -11,7 +11,7 @@ export default {
         },
 
         addToCart(state, product) {
-            // Check if product exist increase quantity of the product instead of adding product to product list
+            // Check if product exist, increase quantity of the product instead of adding product to product list
             let productInCartIndex = state.cart.findIndex(item => item.slug === product.slug);
 
             if(productInCartIndex !== -1) {
