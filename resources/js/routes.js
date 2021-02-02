@@ -1,31 +1,25 @@
-import Index from "./components/Products/Index";
-import ProductShow from "./components/Products/Show";
-
-import Checkout from "./components/Order/Checkout";
-import Summary from "./components/Order/Summary";
-
 export const routes = [
     {
-        path: '/'   ,
+        path: '/',
         name: 'products.index',
-        component: Index
+        component: () => import('./components/Products/Index')
     },
 
     {
         path: '/products/:slug',
         name: 'products.show',
-        component: ProductShow
+        component: () => import('./components/Products/Show')
     },
 
     {
         path: '/checkout',
         name: 'order.checkout',
-        component: Checkout
+        component: () => import('./components/Order/Checkout')
     },
 
     {
         path: '/summary',
         name: 'order.summary',
-        component: Summary
+        component: () => import('./components/Order/Summary')
     }
 ]
