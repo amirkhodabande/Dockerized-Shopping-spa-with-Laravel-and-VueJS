@@ -165,13 +165,15 @@
 </template>
 
 <script>
+import {loadStripe} from '@stripe/stripe-js';
 
 export default {
     name: "Checkout",
 
     data() {
         return {
-
+            stripe: {},
+            cardElement: {},
             customer: {
                 first_name: '',
                 last_name: '',
@@ -184,7 +186,18 @@ export default {
             paymentProcessing: false,
         }
     },
+    async mounted() {
+        this.stripe = await loadStripe(process.env.MIX_STRIPE_KEY);
 
+        const elements = this.stripe.elements();
+        this.cardElement = elements.create('card', {
+            classes: {
+                base: 'bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 p-3 leading-8 transition-colors duration-200 ease-in-out'
+            }
+        });
+
+        this.cardElement.mount('#card-element');
+    },
     computed: {
         cart() {
             return this.$store.state.cart;
@@ -209,8 +222,46 @@ export default {
             return price.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
         },
 
-        processPayment() {
+        async processPayment() {
+            this.paymentProcessing = true;
 
+            const {paymentMethod, error} = await this.stripe.createPaymentMethod(
+                'card', this.cardElement, {
+                    billing_details: {
+                        name: this.customer.first_name + ' ' + this.customer.last_name,
+                        email: this.customer.email,
+                        address: {
+                            line1: this.customer.address,
+                            city: this.customer.city,
+                            state: this.customer.state,
+                            postal_code: this.customer.zip_code
+                        }
+                    }
+                }
+            );
+
+            if (error) {
+                this.paymentProcessing = false;
+                alert(error);
+            } else {
+                this.customer.payment_method_id = paymentMethod.id;
+                this.customer.amount = this.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+                this.customer.cart = JSON.stringify(this.cart);
+
+                axios.post('/api/purchase', this.customer)
+                    .then((response) => {
+                        this.paymentProcessing = false;
+
+                        this.$store.commit('updateOrder', response.data)
+                        this.$store.dispatch('clearCart');
+
+                        this.$router.push({name: 'order.summary'});
+                    })
+                    .catch((error) => {
+                        this.paymentProcessing = false;
+                        alert(error);
+                    });
+            }
         }
     }
 }
