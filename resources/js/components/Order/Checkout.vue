@@ -252,14 +252,15 @@ export default {
                     .then((response) => {
                         this.paymentProcessing = false;
 
-                        this.$store.commit('updateOrder', response.data)
+                        this.$store.commit('updateOrder', response.data);
                         this.$store.dispatch('clearCart');
 
                         this.$router.push({name: 'order.summary'});
+                        this.$toaster.success('The payment process completed successfully:)')
                     })
                     .catch((error) => {
                         this.paymentProcessing = false;
-                        alert(error);
+                        this.$toaster.error(error)
                     });
             }
         }
