@@ -46,7 +46,7 @@ export default {
         },
 
         clearCart({ commit }) {
-            commit('cartUpdate', []);
+            commit('updateCart', []);
         }
     },
 }
