@@ -469,9 +469,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this2.$router.push({
                       name: 'order.summary'
                     });
+
+                    _this2.$toaster.success('The payment process completed successfully:)');
                   })["catch"](function (error) {
                     _this2.paymentProcessing = false;
-                    alert(error);
+
+                    _this2.$toaster.error(error);
                   });
                 }
 
