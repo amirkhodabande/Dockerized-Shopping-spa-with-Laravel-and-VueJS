@@ -29,6 +29,7 @@
         "vuex": "^3.6.2"
     },
     "dependencies": {
-        "v-toaster": "^1.0.3"
+        "v-toaster": "^1.0.3",
+        "validate.js": "^0.13.1"
     }
 }
