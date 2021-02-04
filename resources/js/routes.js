@@ -6,6 +6,18 @@ export const routes = [
     },
 
     {
+        path: '/login',
+        name: 'auth.login',
+        component: () => import('./components/auth/login')
+    },
+
+    {
+        path: '/register',
+        name: 'auth.register',
+        component: () => import('./components/auth/register')
+    },
+
+    {
         path: '/products/:slug',
         name: 'products.show',
         component: () => import('./components/Products/Show')
