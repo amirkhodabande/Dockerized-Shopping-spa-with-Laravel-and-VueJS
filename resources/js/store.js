@@ -1,11 +1,60 @@
+import {getLocalUser} from "./helpers/auth";
+
+const user = getLocalUser();
 
 export default {
     state: {
+        currentUser: user,
+        isLoggedIn: !!user,
+        loading: false,
+        auth_error: null,
         products: [],
-            cart: [],
-            order: {}
+        cart: [],
+        order: {}
     },
-    mutations:{
+    getters: {
+        isLoading(state) {
+            return state.loading;
+        },
+
+        isLoggedIn(state) {
+            return state.isLoggedIn;
+        },
+
+        currentUser(state) {
+            return state.currentUser;
+        },
+
+        authError(state) {
+            return state.auth_error;
+        },
+    },
+    mutations: {
+        login(state) {
+            state.loading = true;
+            state.auth_error = null;
+        },
+
+        loginSuccess(state, payload) {
+            state.auth_error = null;
+            state.isLoggedIn = true;
+            state.loading = false;
+            state.currentUser = Object.assign({}, payload.user, {token: payload.access_token});
+            //    Save logged in user information to the local storage....
+            localStorage.setItem("user", JSON.stringify(state.currentUser));
+        },
+
+        loginFailed(state, payload) {
+            state.loading = false;
+            state.auth_error = payload.error;
+        },
+
+        logout(state) {
+            localStorage.removeItem('user');
+            state.isLoggedIn = false;
+            state.currentUser = null;
+        },
+
         updateProducts(state, products) {
             state.products = products;
         },
@@ -14,7 +63,7 @@ export default {
             // Check if product exist, increase quantity of the product instead of adding product to product list
             let productInCartIndex = state.cart.findIndex(item => item.slug === product.slug);
 
-            if(productInCartIndex !== -1) {
+            if (productInCartIndex !== -1) {
                 state.cart[productInCartIndex].quantity++;
                 return;
             }
@@ -37,7 +86,11 @@ export default {
     },
 
     actions: {
-        getProducts({ commit }) {
+        login(context) {
+            context.commit("login");
+        },
+
+        getProducts({commit}) {
             axios.get('/api/products')
                 .then((response) => {
                     commit('updateProducts', response.data);
@@ -45,7 +98,7 @@ export default {
                 .catch((error) => console.error(error));
         },
 
-        clearCart({ commit }) {
+        clearCart({commit}) {
             commit('updateCart', []);
         }
     },
