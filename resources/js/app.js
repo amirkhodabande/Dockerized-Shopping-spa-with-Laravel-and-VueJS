@@ -7,6 +7,8 @@ import {routes} from './routes'
 import StoreData from './store'
 import Toaster from 'v-toaster'
 import 'v-toaster/dist/v-toaster.css'
+import {initialize} from './helpers/general'
+import MainApp from "./components/MainApp";
 
 Vue.use(VueRouter);
 
@@ -20,6 +22,8 @@ const router = new VueRouter({
     mode: "history"
 });
 
+initialize(store, router);
+
 const app = new Vue({
     router,
     store,
@@ -30,4 +34,8 @@ const app = new Vue({
            .then(_ => {})
            .catch((error) => console.error(error));
     },
+
+    components: {
+        MainApp
+    }
 });
