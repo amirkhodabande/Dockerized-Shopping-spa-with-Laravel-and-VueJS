@@ -18,6 +18,15 @@ export const routes = [
     },
 
     {
+        path: '/products/create',
+        name: 'products.create',
+        component: () => import('./components/Products/New'),
+        meta: {
+            requiresAuth: true
+        }
+    },
+
+    {
         path: '/products/:slug',
         name: 'products.show',
         component: () => import('./components/Products/Show')
