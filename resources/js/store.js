@@ -1,6 +1,8 @@
 import {getLocalUser} from "./helpers/auth";
+import {getLocalCart} from "./helpers/general";
 
 const user = getLocalUser();
+const localCart = getLocalCart();
 
 export default {
     state: {
@@ -9,7 +11,7 @@ export default {
         loading: false,
         auth_error: null,
         products: [],
-        cart: [],
+        cart: localCart,
         order: {}
     },
     getters: {
@@ -51,6 +53,7 @@ export default {
 
         logout(state) {
             localStorage.removeItem('user');
+            localStorage.removeItem('cart');
             state.isLoggedIn = false;
             state.currentUser = null;
         },
@@ -70,10 +73,12 @@ export default {
 
             product.quantity = 1;
             state.cart.push(product);
+            localStorage.setItem("cart", JSON.stringify(state.cart));
         },
 
         removeFromCart(state, index) {
             state.cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(state.cart));
         },
 
         updateOrder(state, order) {
@@ -82,6 +87,7 @@ export default {
 
         updateCart(state, cart) {
             state.cart = cart;
+            localStorage.setItem("cart", JSON.stringify(state.cart));
         }
     },
 
