@@ -16,5 +16,6 @@ Route::group(['prefix' => 'auth'], function ($router) {
 });
 
 Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products', [ProductController::class, 'store']);
 
 Route::post('/purchase', [UserController::class, 'purchase']);
