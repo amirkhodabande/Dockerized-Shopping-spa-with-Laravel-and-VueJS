@@ -1904,6 +1904,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Header",
   computed: {
@@ -20326,6 +20333,19 @@ var render = function() {
                   )
                 ]
               : [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "mr-5 hover:text-gray-900",
+                      attrs: { to: { name: "products.create" } }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Create Product\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c(
                     "small",
                     {

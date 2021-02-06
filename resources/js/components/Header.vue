@@ -34,6 +34,13 @@
                 </template>
 
                 <template v-else>
+                    <router-link
+                        class="mr-5 hover:text-gray-900"
+                        :to="{name: 'products.create'}"
+                    >
+                        Create Product
+                    </router-link>
+
                     <small class="mr-5 py-2 bg-indigo-100 rounded shadow-sm leading-7 text-sm text-gray-400">Welcome dear {{currentUser.name}}</small>
                     <a href="#" @click.prevent="logout" class="mr-5 hover:text-gray-900">Logout</a>
                 </template>
