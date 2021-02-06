@@ -36,3 +36,12 @@ export function initialize(store, router) {
 export function setAuthorization(token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
 }
+
+export function getLocalCart() {
+    const cartStr = localStorage.getItem('cart');
+
+    if (!cartStr)
+        return []
+
+    return JSON.parse(cartStr);
+}
