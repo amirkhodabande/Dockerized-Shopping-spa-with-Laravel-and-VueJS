@@ -1,6 +1,6 @@
 # Single page shopping app
 
-### A simple application to learn how to make ecommerce app with Laravel, VueJs, Jwt auth, LaravelCashier and Stripe.
+### A simple application to learn how to build ecommerce app with Laravel, VueJs, Jwt auth, LaravelCashier and Stripe.
 
 - Laravel
 
