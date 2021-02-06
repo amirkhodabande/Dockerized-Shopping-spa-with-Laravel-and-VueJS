@@ -40,10 +40,18 @@
 
             </nav>
             <router-link
+                v-if="currentUser"
                 class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0"
                 :to="{name: 'order.checkout'}"
             >
                 Checkout<span class="inline-block ml-1" v-text="'(' + $store.state.cart.length + ' items)'"></span>
+            </router-link>
+            <router-link
+                v-else
+                class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0"
+                :to="{name: 'auth.login'}"
+            >
+                Checkout<small class="inline-block ml-1">(Login)</small>
             </router-link>
         </div>
     </header>
@@ -56,7 +64,7 @@ export default {
     computed: {
         currentUser() {
             return this.$store.getters.currentUser;
-        }
+        },
     },
 
     methods: {
