@@ -30,9 +30,15 @@
                         ></span>
 
                         <button
+                            v-if="currentUser"
                             class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
-                            @click="$store.commit('addToCart', product)"
+                            @click="addToCart(product)"
                         >Add to Cart</button>
+                        <router-link
+                            :to="{name: 'auth.login'}"
+                            v-else
+                            class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded"
+                        >Login to add product into your cart</router-link>
                     </div>
                 </div>
             </div>
@@ -45,6 +51,10 @@ export default {
     name: "Show",
 
     computed: {
+        currentUser() {
+            return this.$store.getters.currentUser;
+        },
+
         products() {
             return this.$store.state.products
         },
@@ -58,6 +68,11 @@ export default {
         formatCurrency(price) {
             price = (price / 100);
             return price.toLocaleString('en-US', {style: 'currency', currency: 'USD'})
+        },
+
+        addToCart(product) {
+            this.$store.commit('addToCart', product);
+            this.$toaster.info(product.name + " Added to the cart successfully :)");
         }
     },
 }
