@@ -1896,6 +1896,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Header",
   computed: {
@@ -2064,7 +2072,8 @@ function getLocalUser() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "initialize": () => (/* binding */ initialize),
-/* harmony export */   "setAuthorization": () => (/* binding */ setAuthorization)
+/* harmony export */   "setAuthorization": () => (/* binding */ setAuthorization),
+/* harmony export */   "getLocalCart": () => (/* binding */ getLocalCart)
 /* harmony export */ });
 function initialize(store, router) {
   //Auth check
@@ -2100,6 +2109,11 @@ function initialize(store, router) {
 function setAuthorization(token) {
   axios.defaults.headers.common["Authorization"] = "Bearer ".concat(token);
 }
+function getLocalCart() {
+  var cartStr = localStorage.getItem('cart');
+  if (!cartStr) return [];
+  return JSON.parse(cartStr);
+}
 
 /***/ }),
 
@@ -2131,6 +2145,15 @@ var routes = [{
   name: 'auth.register',
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_components_auth_register_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/auth/register */ "./resources/js/components/auth/register.vue"));
+  }
+}, {
+  path: '/products/create',
+  name: 'products.create',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_components_Products_New_vue").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Products/New */ "./resources/js/components/Products/New.vue"));
+  },
+  meta: {
+    requiresAuth: true
   }
 }, {
   path: '/products/:slug',
@@ -2166,8 +2189,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _helpers_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers/auth */ "./resources/js/helpers/auth.js");
+/* harmony import */ var _helpers_general__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/general */ "./resources/js/helpers/general.js");
+
 
 var user = (0,_helpers_auth__WEBPACK_IMPORTED_MODULE_0__.getLocalUser)();
+var localCart = (0,_helpers_general__WEBPACK_IMPORTED_MODULE_1__.getLocalCart)();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   state: {
     currentUser: user,
@@ -2175,7 +2201,7 @@ var user = (0,_helpers_auth__WEBPACK_IMPORTED_MODULE_0__.getLocalUser)();
     loading: false,
     auth_error: null,
     products: [],
-    cart: [],
+    cart: localCart,
     order: {}
   },
   getters: {
@@ -2213,6 +2239,7 @@ var user = (0,_helpers_auth__WEBPACK_IMPORTED_MODULE_0__.getLocalUser)();
     },
     logout: function logout(state) {
       localStorage.removeItem('user');
+      localStorage.removeItem('cart');
       state.isLoggedIn = false;
       state.currentUser = null;
     },
@@ -2232,15 +2259,18 @@ var user = (0,_helpers_auth__WEBPACK_IMPORTED_MODULE_0__.getLocalUser)();
 
       product.quantity = 1;
       state.cart.push(product);
+      localStorage.setItem("cart", JSON.stringify(state.cart));
     },
     removeFromCart: function removeFromCart(state, index) {
       state.cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(state.cart));
     },
     updateOrder: function updateOrder(state, order) {
       state.order = order;
     },
     updateCart: function updateCart(state, cart) {
       state.cart = cart;
+      localStorage.setItem("cart", JSON.stringify(state.cart));
     }
   },
   actions: {
@@ -20324,25 +20354,40 @@ var render = function() {
           2
         ),
         _vm._v(" "),
-        _c(
-          "router-link",
-          {
-            staticClass:
-              "inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0",
-            attrs: { to: { name: "order.checkout" } }
-          },
-          [
-            _vm._v("\n            Checkout"),
-            _c("span", {
-              staticClass: "inline-block ml-1",
-              domProps: {
-                textContent: _vm._s(
-                  "(" + _vm.$store.state.cart.length + " items)"
-                )
-              }
-            })
-          ]
-        )
+        _vm.currentUser
+          ? _c(
+              "router-link",
+              {
+                staticClass:
+                  "inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0",
+                attrs: { to: { name: "order.checkout" } }
+              },
+              [
+                _vm._v("\n            Checkout"),
+                _c("span", {
+                  staticClass: "inline-block ml-1",
+                  domProps: {
+                    textContent: _vm._s(
+                      "(" + _vm.$store.state.cart.length + " items)"
+                    )
+                  }
+                })
+              ]
+            )
+          : _c(
+              "router-link",
+              {
+                staticClass:
+                  "inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0",
+                attrs: { to: { name: "auth.login" } }
+              },
+              [
+                _vm._v("\n            Checkout"),
+                _c("small", { staticClass: "inline-block ml-1" }, [
+                  _vm._v("(Login)")
+                ])
+              ]
+            )
       ],
       1
     )
@@ -36996,7 +37041,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_components_Products_Index_vue":1,"resources_js_components_auth_login_vue":1,"resources_js_components_auth_register_vue":1,"resources_js_components_Products_Show_vue":1,"resources_js_components_Order_Checkout_vue":1,"resources_js_components_Order_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_components_Products_Index_vue":1,"resources_js_components_auth_login_vue":1,"resources_js_components_auth_register_vue":1,"resources_js_components_Products_New_vue":1,"resources_js_components_Products_Show_vue":1,"resources_js_components_Order_Checkout_vue":1,"resources_js_components_Order_Summary_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

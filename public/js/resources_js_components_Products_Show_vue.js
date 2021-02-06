@@ -53,9 +53,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Show",
   computed: {
+    currentUser: function currentUser() {
+      return this.$store.getters.currentUser;
+    },
     products: function products() {
       return this.$store.state.products;
     },
@@ -74,6 +83,10 @@ __webpack_require__.r(__webpack_exports__);
         style: 'currency',
         currency: 'USD'
       });
+    },
+    addToCart: function addToCart(product) {
+      this.$store.commit('addToCart', product);
+      this.$toaster.info(product.name + " Added to the cart successfully :)");
     }
   }
 });
@@ -228,20 +241,31 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded",
-                          on: {
-                            click: function($event) {
-                              return _vm.$store.commit("addToCart", _vm.product)
-                            }
-                          }
-                        },
-                        [_vm._v("Add to Cart")]
-                      )
-                    ]
+                      _vm.currentUser
+                        ? _c(
+                            "button",
+                            {
+                              staticClass:
+                                "flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded",
+                              on: {
+                                click: function($event) {
+                                  return _vm.addToCart(_vm.product)
+                                }
+                              }
+                            },
+                            [_vm._v("Add to Cart")]
+                          )
+                        : _c(
+                            "router-link",
+                            {
+                              staticClass:
+                                "flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded",
+                              attrs: { to: { name: "auth.login" } }
+                            },
+                            [_vm._v("Login to add product into your cart")]
+                          )
+                    ],
+                    1
                   )
                 ],
                 2
