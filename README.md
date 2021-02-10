@@ -59,7 +59,7 @@
 **Be Happy:)**
 
 
-![alt](https://github.com/amirkhodabande/Spa-shopping-app-with-Laravel-and-VueJS/blob/master/public/gitPre/createProduct.gif)
-![alt](https://github.com/amirkhodabande/Spa-shopping-app-with-Laravel-and-VueJS/blob/master/public/gitPre/addToCart.png)
-![alt](https://github.com/amirkhodabande/Spa-shopping-app-with-Laravel-and-VueJS/blob/master/public/gitPre/pay.png)
-![alt](https://github.com/amirkhodabande/Spa-shopping-app-with-Laravel-and-VueJS/blob/master/public/gitPre/summary.png)
+![alt](https://github.com/amirkhodabande/Dockerized-Shopping-spa-with-Laravel-and-VueJS/blob/master/src/public/gitPre/createProduct.gif)
+![alt](https://github.com/amirkhodabande/Dockerized-Shopping-spa-with-Laravel-and-VueJS/blob/master/src/public/gitPre/addToCart.png)
+![alt](https://github.com/amirkhodabande/Dockerized-Shopping-spa-with-Laravel-and-VueJS/blob/master/src/public/gitPre/pay.png)
+![alt](https://github.com/amirkhodabande/Dockerized-Shopping-spa-with-Laravel-and-VueJS/blob/master/src/public/gitPre/summary.png)
