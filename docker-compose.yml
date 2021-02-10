@@ -10,7 +10,7 @@ services:
       dockerfile: nginx.dockerfile
     container_name: nginx
     ports:
-      - 80:80
+      - 81:80
     volumes:
       - ./src:/var/www/html:delegated
     depends_on:
