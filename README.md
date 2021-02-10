@@ -36,13 +36,13 @@
    : `docker-compose run --rm composer install`
 
 
-*Change sql connection in your .env file*
-*DB_CONNECTION=mysql*
-*DB_HOST=mysql*
-*DB_PORT=3306*
-*DB_DATABASE=homestead*
-*DB_USERNAME=homestead*
-*DB_PASSWORD=secret*
+<p>*Change sql connection in your .env file*</p>
+<p>*DB_CONNECTION=mysql*</p>
+<p>*DB_HOST=mysql*</p>
+<p>*DB_PORT=3306*</p>
+<p>*DB_DATABASE=homestead*</p>
+<p>*DB_USERNAME=homestead*</p>
+<p>*DB_PASSWORD=secret*</p>
 
 
 4. Connect to the database and run database migration
